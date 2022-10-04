@@ -1,0 +1,45 @@
+clear
+SET PATH to c:\wconnect\;c:\wconnect\classes\
+DO C:\wconnect\Samples\wwIPStuff_samples\load_wwipstuff.prg
+DO wwSmtp && load libraries
+
+LOCAL loSMTP as wwSmtp
+loSmtp=CREATEOBJECT("wwSmtp")
+
+loSmtp.lUseSsl = .T.
+loSmtp.nMailMode = 0  && wwIPStuff mode (Win32 - default)   0 - .NET wwSmtp
+loSmtp.ntimeOUT = 25
+
+*** Optional Username
+
+loSmtp.cUsername = "jensen928@outlook.com"
+loSmtp.cPassword = "Get$88august"
+loSmtp.cMailServer="outlook.office365.com:587"
+loSmtp.cSenderEmail="jensen928@outlook.com"
+
+loSmtp.cRecipient="jensen928@hotmail.com"
+*!*	loSmtp.cCCList="rstrahl@east-wind.com,looser@nobody.com"
+*!*	loSmtp.cBCCList="fred@flintstone.com"
+loSmtp.cSubject="wwSmtp Test Message"
+
+*** Optionally specify content type - text/plain is default
+* loSmtp.cContentType = "text/html"  
+
+loSmtp.cMessage = "test 2 from hotmail"
+
+*** Optionally provide an alternate content type or plain text fallback
+*!*	loSmtp.cAlternateContentType = "html"
+*!*	loSmtp.cAlternateText = "Plain text can go here."
+
+*** Optionally send file attachments
+*!*	loSmtp.AddAttachment("c:\temp\somefile.pdf")
+*!*	oSmtp.AddAttachment("c:\temp\sailbig.jpg")
+
+* llResult = loSmtp.[SendMail](vfps://Topic/wwSmtp%3A%3Asendmail)()      
+* llResult = loSmtp.sendmail()
+
+IF !loSmtp.sendmail()
+   ?loSmtp.cErrorMsg
+ELSE
+	?'success'
+ENDIF

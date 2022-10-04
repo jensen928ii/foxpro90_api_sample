@@ -1,0 +1,68 @@
+*!*	LPARAMETERS tcSubject
+*!*	Local lctestmessage, loPOP, lcTo, x, ldate, lcBody
+*!*	ldate = {//}
+*!*	lcBody = ''
+*!*	Do wwPOP3  && Load Libraries
+*!*	loPOP = Createobject("ipworks20.pop")
+
+*!*	loPOP.cMailServer = "pop.gmail.com"
+*!*	loPOP.cUsername = "darrinho28@gmail.com"
+*!*	loPOP.cPassword = "Goodluck3228"
+*!*	lcTo = ""
+
+*!*	*fix me, lopop for darrin
+*!*	If !loPOP.Connect()
+*!*		WAIT WINDOW 'throw 1'
+*!*	Endif
+*!*	lnMsgs = loPOP.Getmessages()
+
+*!*	WAIT WINDOW 'lnmsgs ' + TRANSFORM(lnMsgs)
+
+*!*	*!*	For x = 1 To lnMsgs
+*!*	*!*		If loPOP.aMessages[x].cTo = lcTo AND ;
+*!*	*!*			(tcSubject $ loPOP.aMessages[x].cSubject)
+
+*!*	*!*			loPOP.deletemessage(x)
+
+
+*!*	*!*			If ldate < loPOP.aMessages[x].ddate
+*!*	*!*				ldate = loPOP.aMessages[x].ddate
+*!*	*!*				lcBody = MLINE(loPOP.aMessages[x].cBody,1)
+*!*	*!*			Endif
+*!*	*!*		Endif
+*!*	*!*	Endfor
+*!*	SUSPEND
+
+*!*	Return lcBody
+*!*	Endproc
+CLEAR
+FOR i = 1 TO lopop.MessageCount
+lopop.messagenumber = i
+?lopop.messagenumber 
+lopop.Retrieve()
+?'subject: ' + lopop.MessageSubject 
+ENDFOR 
+RETURN 
+
+
+PUBLIC lopop
+loPOP = Createobject("ipworks20.pop")
+?lopop.SSLStartMode
+*lopop.SSLStartMode = 1
+lopop.SSLStartMode = 0
+* lopop.server = "pop.gmail.com"
+lopop.SSLStartMode = 0
+lopop.mailserver = "pop.gmail.com"
+lopop.User = 'darrinho28online@gmail.com'
+lopop.Password = 'Goodluck3228'
+
+lopop.mailport = 995
+?lopop.connect()
+* ?lopop.disconnect()
+FOR i = 1 TO lopop.MessageCount
+lopop.messagenumber = i
+lopop.Retrieve()
+?lopop
+?'subject: ' + lopop.MessageSubject 
+_cliptext = lopop.runtimelicense
+ENDFOR
